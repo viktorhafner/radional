@@ -1,0 +1,434 @@
+/*
+Theme Name: Radional Tourenbuch
+Theme URI: https://www.radional.at/
+Description: Tourenbuch-Design für radional.at – Bike- und Lauf-Challenges. Child-Theme von Twenty Twenty-Five, mit Steckbrief je Bericht und der Karte aus dem Plugin „Radional Karte“.
+Author: radional.at
+Template: twentytwentyfive
+Version: 1.3.0
+Requires at least: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: radional-tourenbuch
+Update URI: https://github.com/viktorhafner/radional
+*/
+
+/* Kleine Überzeile über Titeln: Art und Datum */
+.rt-kicker {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--montserrat);
+	font-size: 0.75rem;
+	font-weight: 600;
+	line-height: 1.4;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--accent-1);
+}
+.rt-kicker.rt-art-lauf { color: var(--wp--preset--color--accent-3); }
+.rt-kicker.rt-art-sonstiges { color: var(--wp--preset--color--accent-4); }
+
+.rt-eckdaten {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.4rem 1.2rem;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: var(--wp--preset--color--accent-4);
+}
+
+.rt-vorspann {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--cormorant);
+	font-style: italic;
+	font-size: 1.5rem;
+	line-height: 1.45;
+	color: #5E5550;
+}
+
+/* Startseite: Titelbild mit weißer Textkarte darüber */
+.rt-held { position: relative; }
+.rt-held .wp-block-post-featured-image { margin: 0; }
+.rt-held .wp-block-post-featured-image img { height: 620px; }
+.rt-held-karte {
+	position: absolute;
+	left: max(var(--wp--style--root--padding-left, 2rem), calc((100% - 1200px) / 2));
+	bottom: 0;
+	width: min(640px, calc(100% - 4rem));
+	box-sizing: border-box;
+	background: var(--wp--preset--color--base);
+}
+@media (max-width: 781px) {
+	.rt-held .wp-block-post-featured-image img { height: 300px; }
+	.rt-held-karte {
+		position: relative;
+		left: auto;
+		width: auto;
+		margin: -2.5rem 1rem 0 !important;
+		box-shadow: 0 6px 20px rgba(42, 37, 34, 0.10);
+	}
+}
+
+/* Kleine Geschichten neben der großen */
+.rt-klein .wp-block-post-featured-image { flex: 0 0 140px; }
+.rt-klein .wp-block-post-featured-image img { width: 140px; height: 105px; object-fit: cover; }
+@media (max-width: 600px) {
+	.rt-klein .wp-block-post-featured-image { flex-basis: 104px; }
+	.rt-klein .wp-block-post-featured-image img { width: 104px; height: 78px; }
+}
+
+/* Fotostreifen „Unterwegs“ */
+.rt-fotos .wp-block-post-featured-image img { aspect-ratio: 1; object-fit: cover; }
+
+/* Steckbrief neben dem Bericht */
+.rt-steckbrief { display: flex; flex-direction: column; gap: 1.25rem; }
+.rt-steckbrief-box { background: var(--wp--preset--color--accent-2); padding: 1.6rem 1.6rem 1.4rem; }
+.rt-steckbrief-box h2 { margin: 0 0 1rem; font-size: 1.75rem; }
+.rt-steckbrief dl {
+	margin: 0;
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 0.75rem 1rem;
+	font-size: 0.875rem;
+	line-height: 1.45;
+}
+.rt-steckbrief dt { font-weight: 600; color: var(--wp--preset--color--accent-4); }
+.rt-steckbrief dd { margin: 0; }
+.rt-steckbrief .rt-art-lauf { color: var(--wp--preset--color--accent-3); font-weight: 600; }
+.rt-steckbrief .rt-art-bike { color: var(--wp--preset--color--accent-1); font-weight: 600; }
+.rt-steckbrief-karte { font-size: 0.875rem; font-weight: 600; }
+
+/* Initiale im Bericht in Terrakotta */
+.has-drop-cap:not(:focus)::first-letter {
+	font-family: var(--wp--preset--font-family--cormorant);
+	font-weight: 600;
+	color: var(--wp--preset--color--accent-1);
+}
+
+/* Vorheriger / nächster Bericht */
+.rt-weiter .post-navigation-link-previous,
+.rt-weiter .post-navigation-link-next {
+	display: block;
+	padding: 1.4rem 1.5rem;
+	background: var(--wp--preset--color--base);
+	font-family: var(--wp--preset--font-family--cormorant);
+	font-size: 1.6rem;
+	font-weight: 600;
+	line-height: 1.2;
+}
+.rt-weiter .post-navigation-link-next { text-align: right; }
+.rt-weiter a { text-decoration: none; color: var(--wp--preset--color--contrast); }
+.rt-weiter a:hover { color: var(--wp--preset--color--accent-1); }
+.rt-weiter .post-navigation-link__label {
+	display: block;
+	margin-bottom: 0.35rem;
+	font-family: var(--wp--preset--font-family--montserrat);
+	font-size: 0.75rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--accent-4);
+}
+
+/* Logo im Kopf */
+.rt-logo { display: flex; align-items: flex-end; gap: 10px; text-decoration: none; }
+.rt-logo img { display: block; width: auto; }
+.rt-logo .rt-logo-r { height: 52px; }
+.rt-logo .rt-logo-wort { height: 28px; margin-bottom: 2px; }
+@media (max-width: 600px) {
+	.rt-logo .rt-logo-r { height: 40px; }
+	.rt-logo .rt-logo-wort { height: 22px; }
+}
+
+/* Karte aus dem Plugin „Radional Karte“ in den Farben dieses Themes.
+   "body" davor, weil das Plugin sein Stylesheet nach diesem lädt. */
+body .rk {
+	--rk-bike: #D35E3C;
+	--rk-lauf: #3E7357;
+	--rk-sonstiges: #8A817B;
+	--rk-akzent: #B4492A;
+	--rk-text: #2A2522;
+	--rk-leise: #6E645E;
+	--rk-flaeche: #EFE8E1;
+	--rk-schrift-zahl: var(--wp--preset--font-family--cormorant);
+	margin: 0;
+}
+body .rk .rk-kopf { justify-content: center; flex-direction: column; align-items: center; }
+body .rk .rk-zahlen { justify-content: center; text-align: center; gap: 3rem; }
+body .rk .rk-zahl strong { font-size: 3.4em; }
+body .rk .rk-flaeche { border-radius: 14px; }
+
+/* Titelbilder füllen ihre Fläche */
+.rt-held .wp-block-post-featured-image img { width: 100%; object-fit: cover; }
+
+/* „Weiterlesen“ als Knopf */
+.wp-block-read-more.rt-weiterlesen {
+	display: inline-flex;
+	align-items: center;
+	min-height: 46px;
+	padding: 0 1.5rem;
+	background: var(--wp--preset--color--accent-1);
+	color: var(--wp--preset--color--base);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+.wp-block-read-more.rt-weiterlesen:hover { background: var(--wp--preset--color--contrast); color: var(--wp--preset--color--base); }
+@media (max-width: 781px) {
+	.wp-block-read-more.rt-weiterlesen { align-self: stretch; justify-content: center; }
+	.rt-weiter { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+/* Eingebettete Videos und Rahmen in alten Berichten (oft fest 780 px breit) */
+.wp-block-post-content iframe,
+.wp-block-post-content embed,
+.wp-block-post-content video { max-width: 100%; }
+.wp-block-post-content iframe[src*="youtube"],
+.wp-block-post-content iframe[src*="youtu.be"],
+.wp-block-post-content iframe[src*="vimeo"] { width: 100%; height: auto; aspect-ratio: 16 / 9; }
+.wp-block-post-content img { max-width: 100%; height: auto; }
+.wp-block-post-content table { display: block; max-width: 100%; overflow-x: auto; }
+
+/* Am Handy steht der Steckbrief vor dem Bericht, nicht nach seinem Ende */
+@media (max-width: 781px) {
+	.wp-block-column:has(> .rt-steckbrief) { order: -1; }
+}
+
+/* ------------------------------------------------------------------ */
+/* YouTube erst nach Klick                                             */
+.rt-yt {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 16 / 9;
+	margin-block: 1.5rem;
+	overflow: hidden;
+	background: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--base);
+	text-align: center;
+}
+.rt-yt-bild {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0.35;
+	filter: grayscale(0.3);
+}
+.rt-yt-inhalt {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.6rem;
+	max-width: 32rem;
+	padding: 1.25rem;
+}
+.rt-yt .rt-yt-knopf {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	min-height: 52px;
+	padding: 0 1.6rem;
+	border: 0;
+	border-radius: 0;
+	background: var(--wp--preset--color--accent-1);
+	color: var(--wp--preset--color--base);
+	font: 600 0.8125rem/1 var(--wp--preset--font-family--montserrat);
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+.rt-yt .rt-yt-knopf:hover { background: var(--wp--preset--color--base); color: var(--wp--preset--color--contrast); }
+.rt-yt .rt-yt-knopf:focus-visible { outline: 2px solid var(--wp--preset--color--base); outline-offset: 3px; }
+.rt-yt-play {
+	width: 0;
+	height: 0;
+	border-left: 12px solid currentColor;
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+}
+.rt-yt-titel {
+	margin: 0;
+	font-family: var(--wp--preset--font-family--cormorant);
+	font-size: 1.4rem;
+	font-weight: 600;
+	line-height: 1.2;
+}
+.rt-yt-hinweis, .rt-yt-merken { margin: 0; font-size: 0.75rem; line-height: 1.5; color: #E9E1DA; }
+.rt-yt-hinweis a { color: inherit; }
+.rt-yt-merken { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; }
+@media (max-width: 600px) {
+	.rt-yt { aspect-ratio: auto; min-height: 15rem; }
+	.rt-yt-titel { font-size: 1.15rem; }
+}
+.wp-block-post-content iframe.rt-yt-video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; margin-block: 1.5rem; }
+
+/* ------------------------------------------------------------------ */
+/* Übersicht „Alle Berichte“ auf /blog/                                */
+.rt-uebersicht { margin-top: 1.5rem; }
+.rt-uebersicht-zahl { margin: 0 0 1.25rem; text-align: center; font-size: 0.9375rem; color: var(--wp--preset--color--accent-4); }
+.rt-filter { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-bottom: 2.5rem; }
+.rt-filter .rt-filter-knopf {
+	min-height: 44px;
+	padding: 0 1.2rem;
+	border: 1px solid #DDD3CA;
+	border-radius: 999px;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font: 500 0.875rem/1 var(--wp--preset--font-family--montserrat);
+	cursor: pointer;
+}
+.rt-filter .rt-filter-knopf:hover { border-color: var(--wp--preset--color--accent-1); }
+.rt-filter .rt-filter-knopf[aria-pressed="true"] {
+	background: var(--wp--preset--color--accent-1);
+	border-color: var(--wp--preset--color--accent-1);
+	color: var(--wp--preset--color--base);
+}
+.rt-jahr { margin-top: 3rem; }
+.rt-jahr[hidden], .rt-karte[hidden] { display: none; }
+.rt-jahr-titel {
+	display: flex;
+	align-items: baseline;
+	gap: 1rem;
+	margin: 0 0 1.5rem;
+	padding-bottom: 0.6rem;
+	border-bottom: 1px solid var(--wp--preset--color--accent-6);
+	font-size: var(--wp--preset--font-size--x-large);
+}
+.rt-jahr-anzahl {
+	font-family: var(--wp--preset--font-family--montserrat);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--accent-4);
+}
+.rt-karten {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+	gap: 2.25rem 1.75rem;
+}
+.rt-karte { display: flex; flex-direction: column; gap: 0.55rem; }
+.rt-karte-bild { display: block; aspect-ratio: 3 / 2; overflow: hidden; background: var(--wp--preset--color--accent-5); }
+.rt-karte-bild img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.rt-karte:hover .rt-karte-bild img { transform: scale(1.03); }
+.rt-karte .rt-kicker { margin-top: 0.4rem; }
+.rt-karte-titel { margin: 0; font-size: 1.5rem; line-height: 1.15; }
+.rt-karte-titel a { color: var(--wp--preset--color--contrast); text-decoration: none; }
+.rt-karte-titel a:hover { color: var(--wp--preset--color--accent-1); }
+.rt-karte-werte { margin: 0; font-size: 0.8125rem; font-weight: 600; color: var(--wp--preset--color--accent-4); }
+@media (prefers-reduced-motion: reduce) { .rt-karte-bild img { transition: none; } }
+
+/* ------------------------------------------------------------------ */
+/* Galerie „Alle Fotos und Videos“                                     */
+.rt-galerie { margin-top: 1rem; }
+.rt-galerie-zahl { margin: 0 0 1rem; text-align: center; font-size: 0.9375rem; color: var(--wp--preset--color--accent-4); }
+.rt-galerie-jahre {
+	position: sticky;
+	top: 0;
+	z-index: 5;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.35rem 1.4rem;
+	margin: 0 0 1rem;
+	padding: 0.8rem 0;
+	background: var(--wp--preset--color--base);
+	border-bottom: 1px solid var(--wp--preset--color--accent-6);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+}
+.admin-bar .rt-galerie-jahre { top: 32px; }
+.rt-galerie-jahre a { color: var(--wp--preset--color--contrast); text-decoration: none; padding: 0.4rem 0.2rem; }
+.rt-galerie-jahre a:hover { color: var(--wp--preset--color--accent-1); }
+.rt-g-monat { margin-top: 2.5rem; scroll-margin-top: 4.5rem; content-visibility: auto; contain-intrinsic-size: auto 700px; }
+.rt-g-monat-titel { margin: 0 0 1rem; font-size: 1.9rem; }
+.rt-g-raster {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(46%, 180px), 1fr));
+	gap: 6px;
+}
+.rt-g-element {
+	position: relative;
+	display: block;
+	aspect-ratio: 1;
+	overflow: hidden;
+	background: var(--wp--preset--color--accent-5);
+}
+.rt-g-element img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease, opacity 0.35s ease; }
+.rt-g-element:hover img { transform: scale(1.04); }
+.rt-g-element:focus-visible { outline: 3px solid var(--wp--preset--color--accent-1); outline-offset: 2px; }
+.rt-g-video { background: var(--wp--preset--color--contrast); }
+.rt-g-video img { opacity: 0.6; }
+.rt-g-play {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 54px;
+	height: 54px;
+	margin: -27px 0 0 -27px;
+	border-radius: 50%;
+	background: var(--wp--preset--color--accent-1);
+}
+.rt-g-play::after {
+	content: "";
+	position: absolute;
+	left: 21px;
+	top: 16px;
+	border-left: 16px solid #fff;
+	border-top: 11px solid transparent;
+	border-bottom: 11px solid transparent;
+}
+
+/* Großansicht */
+.rt-lb {
+	width: 100vw;
+	height: 100vh;
+	max-width: none;
+	max-height: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: rgba(20, 17, 15, 0.96);
+	color: #F4EEE8;
+}
+.rt-lb::backdrop { background: rgba(20, 17, 15, 0.96); }
+.rt-lb[open] { display: grid; grid-template-columns: 64px minmax(0, 1fr) 64px; grid-template-rows: minmax(0, 1fr) auto; }
+.rt-lb-buehne { grid-column: 2; grid-row: 1; display: flex; align-items: center; justify-content: center; min-height: 0; padding: 3.5rem 0 0.5rem; }
+.rt-lb-medium { max-width: 100%; max-height: 100%; object-fit: contain; }
+.rt-lb-unten { grid-column: 1 / -1; grid-row: 2; display: flex; justify-content: space-between; gap: 1rem; padding: 0.8rem 1.25rem 1.1rem; font-size: 0.875rem; }
+.rt-lb-info { margin: 0; }
+.rt-lb-info a { color: #fff; }
+.rt-lb-zaehler { color: #B8ADA5; white-space: nowrap; }
+.rt-lb .rt-lb-pfeil, .rt-lb .rt-lb-zu {
+	border: 0;
+	background: transparent;
+	color: #F4EEE8;
+	font: 300 2.75rem/1 var(--wp--preset--font-family--montserrat);
+	cursor: pointer;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0;
+}
+.rt-lb .rt-lb-pfeil:hover, .rt-lb .rt-lb-zu:hover { color: var(--wp--preset--color--accent-1); }
+.rt-lb .rt-lb-pfeil:focus-visible, .rt-lb .rt-lb-zu:focus-visible { outline: 2px solid #fff; }
+.rt-lb-zurueck { grid-column: 1; grid-row: 1; }
+.rt-lb-weiter { grid-column: 3; grid-row: 1; }
+.rt-lb .rt-lb-zu { position: absolute; top: 0.5rem; right: 0.75rem; z-index: 2; font-size: 2.25rem; }
+@media (max-width: 600px) {
+	.rt-lb[open] { grid-template-columns: 0 minmax(0, 1fr) 0; }
+	.rt-lb .rt-lb-pfeil { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .rt-g-element img { transition: none; } }

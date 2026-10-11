@@ -1,0 +1,15 @@
+{
+  "theme": {
+    "version": "1.3.0",
+    "package": "https://raw.githubusercontent.com/viktorhafner/radional/main/dist/radional-tourenbuch.zip",
+    "requires": "6.7",
+    "requires_php": "7.4"
+  },
+  "karte": {
+    "version": "1.3.0",
+    "package": "https://raw.githubusercontent.com/viktorhafner/radional/main/dist/radional-karte.zip",
+    "requires": "6.0",
+    "requires_php": "7.0",
+    "changelog": "1.3.0: Updates direkt aus WordPress. 1.2.0: Karten-Vorschläge übernehmen. 1.1.0: Farben, Symbole, Zahlen wie in Österreich."
+  }
+}

@@ -1,0 +1,215 @@
+/* Radional Karte
+   Farben und Schriften stehen als Variablen oben. Wer das Theme wechselt, überschreibt
+   nur diese, etwa im Customizer unter "Zusätzliches CSS":
+   .rk { --rk-bike: #…; --rk-schrift-zahl: …; } */
+.rk {
+    --rk-bike: #e26b4a;          /* Hauptfarbe von radional.at (Blossom Travel) */
+    --rk-lauf: #5e8c6a;
+    --rk-sonstiges: #8a8580;
+    --rk-akzent: var(--rk-bike);
+    --rk-text: #1f1f1f;
+    --rk-leise: #6b6560;
+    --rk-rand: rgba(0, 0, 0, 0.12);
+    --rk-flaeche: #f6f1ec;
+    --rk-schrift: inherit;
+    --rk-schrift-zahl: "Cormorant Garamond", Georgia, serif;
+    margin: 1.5em 0;
+    font-family: var(--rk-schrift);
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--rk-text);
+}
+.rk-art-bike { --rk-farbe: var(--rk-bike); }
+.rk-art-lauf { --rk-farbe: var(--rk-lauf); }
+.rk-art-sonstiges { --rk-farbe: var(--rk-sonstiges); }
+
+.rk svg { display: block; width: 100%; height: 100%; }
+.rk-marke { display: inline-flex; align-items: center; gap: 6px; }
+.rk-symbol { display: inline-block; width: 1.15em; height: 1.15em; color: var(--rk-farbe, currentColor); }
+
+/* Kopf: Kennzahlen und Filter */
+.rk-kopf {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+.rk-zahlen { display: flex; gap: 28px; flex-wrap: wrap; }
+.rk-zahl strong {
+    display: block;
+    font-family: var(--rk-schrift-zahl);
+    font-size: 2.4em;
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: lining-nums tabular-nums;
+}
+.rk-zahl span {
+    font-size: 0.72em;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rk-leise);
+}
+.rk-filter { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+/* Themes gestalten jedes <button> (Blossom Travel: schwarz, 50 px hoch, Großbuchstaben,
+   rosa beim Darüberfahren), manche mit sehr spezifischen Selektoren. Die Bedienelemente
+   der Karte setzen das darum mit !important zurück, und zwar nur diese Eigenschaften. */
+.rk .rk-knopf,
+.rk .rk-jahr {
+    font: inherit !important;
+    font-size: 0.85em !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    width: auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 7px 14px !important;
+    margin: 0 !important;
+    border: 1px solid var(--rk-rand) !important;
+    border-radius: 999px !important;
+    background: #fff !important;
+    color: var(--rk-text) !important;
+    cursor: pointer;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap;
+    box-shadow: none !important;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s !important;
+}
+.rk .rk-knopf:hover { border-color: var(--rk-akzent) !important; }
+.rk .rk-knopf[aria-pressed="true"] {
+    background: var(--rk-akzent) !important;
+    border-color: var(--rk-akzent) !important;
+    color: #fff !important;
+}
+.rk .rk-knopf[aria-pressed="true"] .rk-symbol { color: #fff; }
+.rk .rk-knopf:focus-visible,
+.rk .rk-jahr:focus-visible,
+.rk .rk-laden:focus-visible { outline: 2px solid var(--rk-akzent); outline-offset: 2px; }
+
+/* Kartenfläche */
+.rk-flaeche {
+    position: relative;
+    height: var(--rk-hoehe, 520px);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--rk-flaeche);
+    z-index: 0;
+}
+.rk .leaflet-container { font: inherit; background: var(--rk-flaeche); }
+.rk .leaflet-bar a,
+.rk .leaflet-popup-close-button { text-decoration: none !important; box-shadow: none !important; }
+.rk-laedt::after {
+    content: "Karte wird geladen …";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rk-leise);
+}
+
+/* Hinweis vor dem Laden (Datenschutz) */
+.rk-hinweis {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 24px;
+    text-align: center;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(226, 107, 74, 0.10), transparent 45%),
+        radial-gradient(circle at 80% 75%, rgba(94, 140, 106, 0.12), transparent 50%),
+        var(--rk-flaeche);
+}
+.rk-hinweis > strong { font-family: var(--rk-schrift-zahl); font-size: 1.7em; font-weight: 600; line-height: 1.1; }
+.rk-hinweis-symbol { width: 44px; height: 44px; color: var(--rk-akzent); }
+.rk-hinweis-text { max-width: 440px; margin: 0; font-size: 0.88em; color: var(--rk-leise); }
+.rk-hinweis-text a { color: inherit; text-decoration: underline; }
+.rk .rk-laden {
+    font: inherit !important;
+    font-weight: 600 !important;
+    font-size: 0.85em !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    min-height: 0 !important;
+    padding: 13px 28px !important;
+    margin: 4px 0 0 !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: var(--rk-akzent) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+.rk .rk-laden:hover { filter: brightness(0.92); }
+.rk-merken { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82em; color: var(--rk-leise); cursor: pointer; }
+.rk-merken input { margin: 0; }
+
+/* Pins und Gruppen */
+.rk-pin, .rk-cluster { background: none; border: 0; }
+.rk-pin span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 34px;
+    height: 34px;
+    padding: 7px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: var(--rk-farbe);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+.rk-cluster span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--rk-text);
+    font-family: var(--rk-schrift-zahl);
+    font-size: 17px;
+    font-weight: 700;
+    box-shadow: 0 0 0 4px rgba(226, 107, 74, 0.35), 0 2px 6px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--rk-akzent) 35%, transparent), 0 2px 6px rgba(0, 0, 0, 0.25);
+    border: 2px solid var(--rk-akzent);
+}
+
+/* Popup */
+.rk .leaflet-popup-content-wrapper { border-radius: 12px; }
+.rk .leaflet-popup-content { margin: 12px 14px; line-height: 1.4; }
+.rk-popup img { width: 100%; height: 130px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; display: block; }
+.rk-popup-art {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72em;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rk-farbe, var(--rk-leise));
+}
+.rk-popup-art .rk-marke { color: var(--rk-farbe); }
+.rk-popup-datum { color: var(--rk-leise); font-weight: 500; letter-spacing: 0.04em; }
+.rk-popup-titel { display: block; font-family: var(--rk-schrift-zahl); font-size: 1.35em; font-weight: 600; line-height: 1.15; margin: 4px 0; color: var(--rk-text); }
+.rk-popup-ort, .rk-popup-werte { font-size: 0.88em; color: var(--rk-leise); }
+.rk-popup-werte { font-variant-numeric: tabular-nums; }
+.rk .rk-popup-link { display: inline-block; margin-top: 8px; font-weight: 600; font-size: 0.85em; color: var(--rk-akzent); text-decoration: none; }
+.rk .rk-popup-link:hover { text-decoration: underline; }
+
+@media (max-width: 600px) {
+    .rk-flaeche { height: min(var(--rk-hoehe, 520px), 70vh); }
+    .rk-zahlen { gap: 18px; }
+    .rk-zahl strong { font-size: 1.9em; }
+}
