@@ -23,7 +23,11 @@
 .rk-art-lauf { --rk-farbe: var(--rk-lauf); }
 .rk-art-sonstiges { --rk-farbe: var(--rk-sonstiges); }
 
-.rk svg { display: block; width: 100%; height: 100%; }
+/* Nur die eigenen Symbole füllen ihre Box – nicht die Grafiken von Leaflet
+   (Strecken, Fähnchen im Quellenhinweis), sonst verrutschen diese. */
+.rk .rk-symbol > svg,
+.rk .rk-hinweis-symbol > svg,
+.rk .rk-pin span > svg { display: block; width: 100%; height: 100%; }
 .rk-marke { display: inline-flex; align-items: center; gap: 6px; }
 .rk-symbol { display: inline-block; width: 1.15em; height: 1.15em; color: var(--rk-farbe, currentColor); }
 
@@ -212,4 +216,21 @@
     .rk-flaeche { height: min(var(--rk-hoehe, 520px), 70vh); }
     .rk-zahlen { gap: 18px; }
     .rk-zahl strong { font-size: 1.9em; }
+}
+
+/* Streckenkarte eines Berichts ([radional_strecke] bzw. [sgpx]) */
+.rk.rk-strecke { margin: 2rem 0; }
+.rk.rk-strecke .rk-zahlen { justify-content: flex-start; text-align: left; gap: 2rem; margin-bottom: 0.9rem; }
+.rk.rk-strecke .rk-zahl strong { font-size: 1.9em; }
+.rk.rk-strecke .rk-flaeche { height: var(--rk-hoehe, 420px); }
+.rk-profil { display: block; width: 100%; height: 150px; margin-top: 0.6rem; overflow: visible; }
+.rk-profil-flaeche { fill: var(--rk-farbe, var(--rk-akzent)); fill-opacity: 0.16; }
+.rk-profil-linie { fill: none; stroke: var(--rk-farbe, var(--rk-akzent)); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.rk-profil-raster { stroke: var(--rk-rand); stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
+.rk-profil-text { fill: var(--rk-leise); font-size: 13px; font-family: inherit; }
+.rk-strecke-fehler { padding: 0.8rem 1rem; border-left: 3px solid #b4492a; background: #faf6f2; font-size: 0.9em; }
+@media (max-width: 600px) {
+	.rk.rk-strecke .rk-zahlen { gap: 1.2rem; }
+	.rk.rk-strecke .rk-zahl strong { font-size: 1.5em; }
+	.rk-profil { height: 110px; }
 }

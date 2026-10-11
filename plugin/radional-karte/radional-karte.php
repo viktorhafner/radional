@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Radional Karte
  * Description: Interaktive Karte aller Bike- und Lauf-Challenges. Ort, Art, km und Hm werden je Beitrag eingetragen, die Karte erscheint per Shortcode [radional_karte].
- * Version:     1.3.0
+ * Version:     1.4.0
  * Author:      radional.at
  * License:     GPL-2.0-or-later
  * Requires PHP: 7.0
@@ -13,12 +13,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('RADIONAL_KARTE_VERSION', '1.3.0');
+define('RADIONAL_KARTE_VERSION', '1.4.0');
 
 if (is_admin()) {
     require_once __DIR__ . '/includes/vorschlaege.php';
 }
 require_once __DIR__ . '/includes/update.php';
+require_once __DIR__ . '/includes/strecke.php';
 
 /* ------------------------------------------------------------------ */
 /* Eingabe im Beitrag                                                  */

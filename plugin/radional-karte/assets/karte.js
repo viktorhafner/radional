@@ -157,6 +157,46 @@
         return box;
     }
 
+    /* Zustimmungs-Hinweis vor dem Laden der Kacheln; auch für die Streckenkarte (strecke.js) */
+    function zustimmungsHinweis(flaeche, datenschutz, titel, beimLaden) {
+        var box = el('div', 'rk-hinweis');
+        var symbol = el('div', 'rk-hinweis-symbol');
+        symbol.innerHTML = SVG('<path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4zM9 4v13M15 6.5v13"/>');
+        box.appendChild(symbol);
+        box.appendChild(el('strong', '', titel));
+        var p = el('p', 'rk-hinweis-text',
+            'Beim Laden der Karte wird deine IP-Adresse an OpenStreetMap übertragen. ');
+        /* Ohne eingerichtete Datenschutzseite wenigstens die von OpenStreetMap */
+        var a = el('a', '', datenschutz ? 'Mehr dazu in der Datenschutzerklärung'
+            : 'Datenschutzerklärung von OpenStreetMap');
+        a.href = datenschutz || OSM_DATENSCHUTZ;
+        if (!datenschutz) { a.rel = 'noopener'; a.target = '_blank'; }
+        p.appendChild(a);
+        p.appendChild(document.createTextNode('.'));
+        box.appendChild(p);
+        var knopf = el('button', 'rk-laden', 'Karte laden');
+        knopf.type = 'button';
+        var merken = el('label', 'rk-merken');
+        var check = el('input');
+        check.type = 'checkbox';
+        merken.appendChild(check);
+        merken.appendChild(document.createTextNode(' Karte künftig immer laden'));
+        knopf.addEventListener('click', function () {
+            if (check.checked) { zustimmungSpeichern(); }
+            beimLaden();
+        });
+        box.appendChild(knopf);
+        box.appendChild(merken);
+        flaeche.appendChild(box);
+    }
+
+    window.RadionalKarte = {
+        ladeLeaflet: ladeLeaflet,
+        zustimmungGespeichert: zustimmungGespeichert,
+        zustimmungsHinweis: zustimmungsHinweis,
+        farbeVon: farbeVon
+    };
+
     function starte(wurzel) {
         var konfig;
         try {
@@ -328,35 +368,7 @@
         }
 
         function hinweisZeigen() {
-            var box = el('div', 'rk-hinweis');
-            var symbol = el('div', 'rk-hinweis-symbol');
-            symbol.innerHTML = SVG('<path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5 9 4zM9 4v13M15 6.5v13"/>');
-            box.appendChild(symbol);
-            box.appendChild(el('strong', '', 'Karte meiner Challenges'));
-            var p = el('p', 'rk-hinweis-text',
-                'Beim Laden der Karte wird deine IP-Adresse an OpenStreetMap übertragen. ');
-            /* Ohne eingerichtete Datenschutzseite wenigstens die von OpenStreetMap */
-            var a = el('a', '', konfig.datenschutz ? 'Mehr dazu in der Datenschutzerklärung'
-                : 'Datenschutzerklärung von OpenStreetMap');
-            a.href = konfig.datenschutz || OSM_DATENSCHUTZ;
-            if (!konfig.datenschutz) { a.rel = 'noopener'; a.target = '_blank'; }
-            p.appendChild(a);
-            p.appendChild(document.createTextNode('.'));
-            box.appendChild(p);
-            var knopf = el('button', 'rk-laden', 'Karte laden');
-            knopf.type = 'button';
-            var merken = el('label', 'rk-merken');
-            var check = el('input');
-            check.type = 'checkbox';
-            merken.appendChild(check);
-            merken.appendChild(document.createTextNode(' Karte künftig immer laden'));
-            knopf.addEventListener('click', function () {
-                if (check.checked) { zustimmungSpeichern(); }
-                karteZeigen();
-            });
-            box.appendChild(knopf);
-            box.appendChild(merken);
-            flaeche.appendChild(box);
+            zustimmungsHinweis(flaeche, konfig.datenschutz, 'Karte meiner Challenges', karteZeigen);
         }
 
         kennzahlen();
@@ -368,7 +380,7 @@
     }
 
     function alle() {
-        var w = document.querySelectorAll('.rk');
+        var w = document.querySelectorAll('.rk:not(.rk-strecke)');
         for (var i = 0; i < w.length; i++) {
             if (!w[i].dataset.rkFertig) {
                 w[i].dataset.rkFertig = '1';

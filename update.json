@@ -7,10 +7,10 @@
     "changelog": "1.5.0: E-Mail-Adressen vor Spam-Sammlern geschützt (auch in den Beschreibungen von Yoast). 1.4.0: Impressum und Datenschutzerklärung als Entwurf."
   },
   "karte": {
-    "version": "1.3.0",
+    "version": "1.4.0",
     "package": "https://raw.githubusercontent.com/viktorhafner/radional/main/dist/radional-karte.zip",
     "requires": "6.0",
     "requires_php": "7.0",
-    "changelog": "1.3.0: Updates direkt aus WordPress. 1.2.0: Karten-Vorschläge übernehmen. 1.1.0: Farben, Symbole, Zahlen wie in Österreich."
+    "changelog": "1.4.0: Streckenkarte mit Höhenprofil für einzelne Berichte; ersetzt WP GPX Maps ([sgpx] wird übernommen). Grafiken von Leaflet 1.9 werden richtig dargestellt. 1.3.0: Updates direkt aus WordPress."
   }
 }
