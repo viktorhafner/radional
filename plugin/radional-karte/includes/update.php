@@ -3,7 +3,7 @@
  * Updates für das Plugin aus dem GitHub-Repository viktorhafner/radional.
  *
  * WordPress fragt regelmäßig nach Updates. Dabei liest dieses Plugin die Datei
- * update.json aus dem Repository (höchstens alle 6 Stunden, sonst aus dem
+ * update.json aus dem Repository (höchstens alle 2 Stunden, sonst aus dem
  * Zwischenspeicher). Steht dort eine höhere Version, erscheint das Update unter
  * „Dashboard → Aktualisierungen“ und wird von dort mit einem Klick installiert.
  *
@@ -35,7 +35,7 @@ if (!function_exists('radional_update_info')) {
             }
         }
         // auch einen Fehlschlag kurz merken, damit nicht jeder Seitenaufruf im Admin wartet
-        set_site_transient('radional_update_info', is_array($info) ? $info : array(), $info ? 6 * HOUR_IN_SECONDS : HOUR_IN_SECONDS);
+        set_site_transient('radional_update_info', is_array($info) ? $info : array(), $info ? 2 * HOUR_IN_SECONDS : HOUR_IN_SECONDS);
         return $info;
     }
 
@@ -46,10 +46,19 @@ if (!function_exists('radional_update_info')) {
             || (defined('RADIONAL_UPDATE_URL') && is_string($url) && strpos($url, dirname(RADIONAL_UPDATE_URL) . '/') === 0);
     }
 
-    /* Nach einem Update sofort neu nachsehen, statt bis zu 6 Stunden das Alte zu glauben */
+    /* Nach einem Update sofort neu nachsehen, statt bis zu 2 Stunden das Alte zu glauben */
     add_action('upgrader_process_complete', function () {
         delete_site_transient('radional_update_info');
     });
+
+    /* „Erneut prüfen“ unter Dashboard → Aktualisierungen fragt immer frisch bei GitHub nach.
+       Ohne das blieb bis zu 6 Stunden die alte Versionsliste stehen, obwohl längst eine neue da war.
+       Priorität 1: vor wp_update_themes/wp_update_plugins, die WordPress am selben Haken aufruft. */
+    add_action('load-update-core.php', function () {
+        if (!empty($_GET['force-check']) && current_user_can('update_themes')) {
+            delete_site_transient('radional_update_info');
+        }
+    }, 1);
 }
 
 add_filter('pre_set_site_transient_update_plugins', function ($transient) {

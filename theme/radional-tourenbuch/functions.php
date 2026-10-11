@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('RADIONAL_TB_VERSION', '1.6.0');
+define('RADIONAL_TB_VERSION', '1.6.1');
 
 require_once __DIR__ . '/inc/youtube.php';
 require_once __DIR__ . '/inc/uebersicht.php';
