@@ -278,3 +278,16 @@ add_action('wp_loaded', function () {
         add_shortcode('sgpx', 'radional_karte_strecke');
     }
 });
+
+/* Ist im Kasten „Karte (Challenge-Ort)“ eine GPX-Datei gewählt, erscheint die Streckenkarte
+   automatisch unter dem Bericht – außer der Bericht bindet selbst schon eine ein. */
+add_filter('the_content', function ($inhalt) {
+    if (!is_singular('post') || !in_the_loop() || !is_main_query() || is_feed()) {
+        return $inhalt;
+    }
+    $gpx = (string) get_post_meta(get_the_ID(), '_rk_gpx', true);
+    if ($gpx === '' || strpos($inhalt, 'rk-strecke') !== false || strpos($inhalt, 'wpgpxmaps') !== false) {
+        return $inhalt;
+    }
+    return $inhalt . radional_karte_strecke(array('gpx' => $gpx));
+}, 20);

@@ -18,13 +18,17 @@ $home = esc_url(home_url('/'));
 <a class="rt-logo" href="<?php echo $home; ?>" rel="home" aria-label="Radional – Startseite"><img class="rt-logo-r" src="<?php echo $r; ?>" alt="" width="273" height="360"><img class="rt-logo-wort" src="<?php echo $wort; ?>" alt="Radional" width="760" height="172"></a>
 <!-- /wp:html -->
 
+<!-- wp:group {"style":{"spacing":{"blockGap":"1.4rem"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"right"}} -->
+<div class="wp-block-group"><!-- wp:search {"label":"Suche","showLabel":false,"placeholder":"Berichte durchsuchen …","buttonText":"Suchen","buttonPosition":"button-only","buttonUseIcon":true,"isSearchFieldHidden":true,"className":"rt-suche"} /-->
+
 <!-- wp:navigation {"overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right"},"style":{"spacing":{"blockGap":"1.9rem"}}} -->
 <!-- wp:navigation-link {"label":"Berichte","url":"<?php echo esc_url(home_url('/blog/')); ?>","kind":"custom"} /-->
 <!-- wp:navigation-link {"label":"Karte","url":"<?php echo esc_url(home_url('/#karte')); ?>","kind":"custom"} /-->
 <!-- wp:navigation-link {"label":"Bucket List","url":"<?php echo esc_url(home_url('/bucket-list/')); ?>","kind":"custom"} /-->
 <!-- wp:navigation-link {"label":"Meine Bikes","url":"<?php echo esc_url(home_url('/meine-bikes/')); ?>","kind":"custom"} /-->
 <!-- wp:navigation-link {"label":"Fotos","url":"<?php echo esc_url(home_url('/bike-trail-run-fotos/')); ?>","kind":"custom"} /-->
-<!-- /wp:navigation -->
+<!-- /wp:navigation --></div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 </div>

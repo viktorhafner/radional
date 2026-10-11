@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Radional Karte
  * Description: Interaktive Karte aller Bike- und Lauf-Challenges. Ort, Art, km und Hm werden je Beitrag eingetragen, die Karte erscheint per Shortcode [radional_karte].
- * Version:     1.4.0
+ * Version:     1.5.0
  * Author:      radional.at
  * License:     GPL-2.0-or-later
  * Requires PHP: 7.0
@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('RADIONAL_KARTE_VERSION', '1.4.0');
+define('RADIONAL_KARTE_VERSION', '1.5.0');
 
 if (is_admin()) {
     require_once __DIR__ . '/includes/vorschlaege.php';
@@ -41,6 +41,21 @@ add_action('add_meta_boxes', function () {
     add_meta_box('radional_karte', 'Karte (Challenge-Ort)', 'radional_karte_metabox', 'post', 'side');
 });
 
+/* Knopf „GPX-Datei wählen“: Mediathek-Fenster auf der Bearbeiten-Seite eines Beitrags */
+add_action('admin_enqueue_scripts', function ($seite) {
+    if (!in_array($seite, array('post.php', 'post-new.php'), true) || get_post_type() !== 'post') {
+        return;
+    }
+    wp_enqueue_media();
+    wp_enqueue_script(
+        'radional-karte-gpx-wahl',
+        plugin_dir_url(__FILE__) . 'assets/gpx-wahl.js',
+        array('jquery'),
+        RADIONAL_KARTE_VERSION,
+        true
+    );
+});
+
 function radional_karte_metabox($post)
 {
     wp_nonce_field('radional_karte_speichern', 'radional_karte_nonce');
@@ -65,9 +80,13 @@ function radional_karte_metabox($post)
         <label style="flex:1"><strong>km</strong><br><input type="text" name="rk_km" value="<?php echo esc_attr($w['km']); ?>" style="width:100%"></label>
         <label style="flex:1"><strong>Hm</strong><br><input type="text" name="rk_hm" value="<?php echo esc_attr($w['hm']); ?>" style="width:100%"></label>
     </p>
-    <p><label><strong>GPX-Datei (optional)</strong><br>
-        <input type="url" name="rk_gpx" value="<?php echo esc_attr($w['gpx']); ?>" placeholder="https://…/wp-content/uploads/…gpx" style="width:100%"></label><br>
-        <small>GPX in die Mediathek hochladen und die Datei-URL hier einfügen. Start und Ziel werden auf der Karte um 300 m gekürzt.</small></p>
+    <p><label for="rk_gpx"><strong>GPX-Datei (optional)</strong></label><br>
+        <input type="url" id="rk_gpx" name="rk_gpx" value="<?php echo esc_attr($w['gpx']); ?>" placeholder="https://…/wp-content/uploads/…gpx" style="width:100%"><br>
+        <span style="display:flex;gap:6px;margin-top:6px">
+            <button type="button" class="button rk-gpx-waehlen">GPX-Datei wählen</button>
+            <button type="button" class="button-link rk-gpx-entfernen"<?php echo $w['gpx'] ? '' : ' hidden'; ?>>entfernen</button>
+        </span>
+        <small>Hochladen oder aus der Mediathek wählen. Die Strecke erscheint dann mit Höhenprofil unter dem Bericht und als Linie auf der großen Karte; Start und Ziel sind um 300 m gekürzt.</small></p>
     <?php
 }
 

@@ -4,7 +4,7 @@ Theme URI: https://www.radional.at/
 Description: Tourenbuch-Design für radional.at – Bike- und Lauf-Challenges. Child-Theme von Twenty Twenty-Five, mit Steckbrief je Bericht und der Karte aus dem Plugin „Radional Karte“.
 Author: radional.at
 Template: twentytwentyfive
-Version: 1.5.0
+Version: 1.6.0
 Requires at least: 6.7
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -432,3 +432,53 @@ body .rk .rk-flaeche { border-radius: 14px; }
 	.rt-lb .rt-lb-pfeil { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .rt-g-element img { transition: none; } }
+
+/* ------------------------------------------------------------------ */
+/* Suche                                                               */
+.rt-suche .wp-block-search__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--wp--preset--color--contrast);
+}
+.rt-suche .wp-block-search__button:hover { color: var(--wp--preset--color--accent-1); background: transparent; }
+.rt-suche .wp-block-search__button svg { width: 22px; height: 22px; fill: currentColor; }
+.rt-suche .wp-block-search__input {
+	min-height: 40px;
+	border: 1px solid #DDD3CA;
+	border-radius: 0;
+	padding: 0 0.8rem;
+	font: 400 0.9375rem var(--wp--preset--font-family--montserrat);
+}
+.rt-suche.wp-block-search__searchfield-hidden .wp-block-search__input { border: 0; padding: 0; }
+.rt-suche-gross { max-width: 560px; margin: 1.5rem auto 3rem !important; }
+.rt-suche-gross .wp-block-search__input {
+	min-height: 52px;
+	border: 1px solid #DDD3CA;
+	border-radius: 0;
+	padding: 0 1rem;
+	font: 400 1rem var(--wp--preset--font-family--montserrat);
+}
+.rt-suche-gross .wp-block-search__button { margin-left: 0; border-radius: 0; }
+.wp-block-query-title { text-align: center; }
+
+/* Schnellsuche in der Übersicht /blog/ */
+.rt-schnellsuche { max-width: 520px; margin: 0 auto 1.25rem; text-align: center; }
+.rt-schnellsuche input {
+	width: 100%;
+	box-sizing: border-box;
+	min-height: 50px;
+	padding: 0 1.1rem;
+	border: 1px solid #DDD3CA;
+	border-radius: 999px;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font: 400 1rem var(--wp--preset--font-family--montserrat);
+}
+.rt-schnellsuche input:focus { outline: 2px solid var(--wp--preset--color--accent-1); outline-offset: 2px; border-color: var(--wp--preset--color--accent-1); }
+.rt-schnellsuche-leer { margin: 1.25rem 0 0; color: var(--wp--preset--color--accent-4); }

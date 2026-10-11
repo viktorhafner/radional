@@ -43,6 +43,9 @@ function radional_tb_uebersicht($attribute = array(), $inhalt = '', $block = nul
         : 'class="rt-uebersicht"';
     $html = '<div ' . $huelle . '>';
     $html .= '<p class="rt-uebersicht-zahl">' . esc_html(count($ids) . ' Berichte seit ' . min(array_keys($jahre))) . '</p>';
+    $html .= '<div class="rt-schnellsuche"><label class="screen-reader-text" for="rt-schnellsuche">Berichte durchsuchen</label>'
+        . '<input type="search" id="rt-schnellsuche" placeholder="Bericht suchen – Ort, Berg, Rennen …" autocomplete="off">'
+        . '<p class="rt-schnellsuche-leer" hidden>Kein Bericht passt. <a href="' . esc_url(home_url('/?s=')) . '" class="rt-volltext">Im ganzen Text suchen →</a></p></div>';
     if (count($arten) > 1) {
         $html .= '<div class="rt-filter" role="group" aria-label="Nach Art filtern">';
         $html .= '<button type="button" class="rt-filter-knopf" data-art="" aria-pressed="true">Alle</button>';
@@ -73,7 +76,8 @@ function radional_tb_uebersicht($attribute = array(), $inhalt = '', $block = nul
             if ($hm > 0) {
                 $werte[] = radional_tb_zahl($hm) . ' Hm';
             }
-            $html .= '<li class="rt-karte" data-art="' . esc_attr($art) . '">';
+            $suche = wp_strip_all_tags($titel) . ' ' . get_post_meta($id, '_rk_ort', true) . ' ' . get_the_date('Y', $id);
+            $html .= '<li class="rt-karte" data-art="' . esc_attr($art) . '" data-suche="' . esc_attr(remove_accents(mb_strtolower($suche))) . '">';
             $html .= '<a class="rt-karte-bild" href="' . esc_url($link) . '" tabindex="-1" aria-hidden="true">';
             if (has_post_thumbnail($id)) {
                 $html .= get_the_post_thumbnail($id, 'medium_large', array('loading' => 'lazy', 'alt' => ''));

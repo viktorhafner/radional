@@ -1,0 +1,39 @@
+<!-- wp:template-part {"slug":"header","area":"header"} /-->
+
+<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"4.5rem","bottom":"5rem"}}},"layout":{"type":"constrained"}} -->
+<main class="wp-block-group" style="padding-top:4.5rem;padding-bottom:5rem"><!-- wp:paragraph {"align":"center","className":"rt-kicker"} -->
+<p class="has-text-align-center rt-kicker">Suche</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:query-title {"type":"search","textAlign":"center","showSearchTerm":true,"style":{"spacing":{"margin":{"top":"0.5rem"}}}} /-->
+
+<!-- wp:search {"label":"Suche","showLabel":false,"placeholder":"Berichte durchsuchen …","buttonText":"Suchen","className":"rt-suche-gross"} /-->
+
+<!-- wp:query {"queryId":21,"query":{"perPage":12,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":true},"align":"wide"} -->
+<div class="wp-block-query alignwide"><!-- wp:post-template {"style":{"spacing":{"blockGap":"2.25rem"}},"layout":{"type":"grid","columnCount":3}} -->
+<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"3/2"} /-->
+
+<!-- wp:radional/kicker /-->
+
+<!-- wp:post-title {"level":2,"isLink":true,"style":{"typography":{"fontSize":"1.5rem","lineHeight":"1.15"}}} /-->
+
+<!-- wp:post-excerpt {"excerptLength":22} /-->
+<!-- /wp:post-template -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph {"align":"center"} -->
+<p class="has-text-align-center">Dazu habe ich keinen Bericht gefunden. Versuch ein anderes Wort – einen Ort, einen Berg oder ein Rennen – oder schau in die <a href="/blog/">Übersicht aller Berichte</a>.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results -->
+
+<!-- wp:query-pagination {"paginationArrow":"arrow","layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous {"label":"Neuere"} /-->
+
+<!-- wp:query-pagination-numbers /-->
+
+<!-- wp:query-pagination-next {"label":"Ältere"} /-->
+<!-- /wp:query-pagination --></div>
+<!-- /wp:query --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer"} /-->
