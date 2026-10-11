@@ -11,12 +11,13 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('RADIONAL_TB_VERSION', '1.3.0');
+define('RADIONAL_TB_VERSION', '1.4.0');
 
 require_once __DIR__ . '/inc/youtube.php';
 require_once __DIR__ . '/inc/uebersicht.php';
 require_once __DIR__ . '/inc/galerie.php';
 require_once __DIR__ . '/inc/update.php';
+require_once __DIR__ . '/inc/rechtstexte.php';
 
 add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style(
