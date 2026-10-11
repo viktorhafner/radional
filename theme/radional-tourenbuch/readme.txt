@@ -1,5 +1,5 @@
 === Radional Tourenbuch ===
-Version: 1.4.0
+Version: 1.5.0
 Benötigt: WordPress 6.7, PHP 7.4, Eltern-Theme „Twenty Twenty-Five“
 Lizenz: GPLv2 oder später
 

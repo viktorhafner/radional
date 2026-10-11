@@ -1,10 +1,10 @@
 {
   "theme": {
-    "version": "1.4.0",
+    "version": "1.5.0",
     "package": "https://raw.githubusercontent.com/viktorhafner/radional/main/dist/radional-tourenbuch.zip",
     "requires": "6.7",
     "requires_php": "7.4",
-    "changelog": "1.4.0: Impressum und Datenschutzerklärung werden als Entwurf angelegt. 1.3.0: Updates direkt aus WordPress."
+    "changelog": "1.5.0: E-Mail-Adressen vor Spam-Sammlern geschützt (auch in den Beschreibungen von Yoast). 1.4.0: Impressum und Datenschutzerklärung als Entwurf."
   },
   "karte": {
     "version": "1.3.0",
